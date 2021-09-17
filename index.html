@@ -9,43 +9,30 @@
     href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap"
     rel="stylesheet"
   />
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device.width, initial-scale=1.0">
   <title>Suyash Maddhessiya</title>
 
-  <body id="body" class="px-12">
+  <body id="body" class="px-12 bg-black">
     <div class="flex justify-between p-12">
       <div class="font-medium text-white text-3xl">SM</div>
       <div class="flex inline-block">
-        <button class="text-white hover:text-blue-300 px-7">Projects</button>
-        <button class="text-white hover:text-blue-300 px-7">Skills</button>
-        <button class="text-white hover:text-blue-300 px-7">Contact Me</button>
+        <button class="text-white hover:text-blue-300 px-7 text-sm font-medium">Projects</button>
+        <button class="text-white hover:text-blue-300 px-7 text-sm font-medium">Skills</button>
+        <button class="text-white hover:text-blue-300 px-7 text-sm font-medium">Contact Me</button>
       </div>
     </div>
-    <div class="p-12">
+    <div class="p-12 pb-12 flex justify-between">
       <div>
-        <h1 class="text-5xl font-thin text-white pt-5">Hi I am</h1>
-        <h1 class="name text-5xl text-blue-300 py-2">
-          SUYASH <br />MADDHESSIYA
+        <h1 class="lg:text-5xl font-thin text-white pt-5 sm:text-2xl mt-12">Hi, I am</h1>
+        <h1 class="name lg:text-6xl text-blue-400 py-2 sm:text-3xl">
+          SUYASH <br />MADDHESSIYA.
         </h1>
       </div>
     </div>
+    <div class="projects">
+      <p class="text-white text-4xl">PROJETCS</p>
+    </div>
   </body>
-  <style>
-    #body {
-      background-color: #000000;
-    }
-    .name {
-      font-family: "Comfortaa", cursive;
-      animation: fadeInAnimation ease 5s;
-      animation-iteration-count: 1;
-      animation-fill-mode: forwards;
-    }
-    @keyframes fadeInAnimation {
-      0% {
-        opacity: 0;
-      }
-      100% {
-        opacity: 1;
-      }
-    }
-  </style>
+  
 </html>
