@@ -1,13 +1,51 @@
 <html>
-<title> Suyash Maddhessiya </title>
+  <link
+    href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap"
+    rel="stylesheet"
+  />
+  <title>Suyash Maddhessiya</title>
 
-<body>
-  <h1>Hi, myself Suyash Maddhessiya</h1>
-  <p>This site is under development</p>
-</body>
-
-
-
-
-
+  <body id="body" class="px-12">
+    <div class="flex justify-between p-12">
+      <div class="font-medium text-white text-3xl">SM</div>
+      <div class="flex inline-block">
+        <button class="text-white hover:text-blue-300 px-7">Projects</button>
+        <button class="text-white hover:text-blue-300 px-7">Skills</button>
+        <button class="text-white hover:text-blue-300 px-7">Contact Me</button>
+      </div>
+    </div>
+    <div class="p-12">
+      <div>
+        <h1 class="text-5xl font-thin text-white pt-5">Hi I am</h1>
+        <h1 class="name text-5xl text-blue-300 py-2">
+          SUYASH <br />MADDHESSIYA
+        </h1>
+      </div>
+    </div>
+  </body>
+  <style>
+    #body {
+      background-color: #000000;
+    }
+    .name {
+      font-family: "Comfortaa", cursive;
+      animation: fadeInAnimation ease 5s;
+      animation-iteration-count: 1;
+      animation-fill-mode: forwards;
+    }
+    @keyframes fadeInAnimation {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+  </style>
 </html>
