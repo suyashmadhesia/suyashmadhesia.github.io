@@ -1,2 +1,0 @@
-bg color = #030217
-card color = -#090A1C
