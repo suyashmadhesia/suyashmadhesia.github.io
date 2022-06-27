@@ -7,7 +7,7 @@ const canvas = document.querySelector('canvas.webgl')
 
 // Scene
 const scene = new THREE.Scene()
-scene.background = new THREE.Color(0x101010)
+scene.background = new THREE.Color(0x000005)
 
 /**
  * Sizes
@@ -60,9 +60,8 @@ window.addEventListener('dblclick', () => {
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(60, sizes.width / sizes.height, 0.1, 100)
-camera.position.z = 18;
-camera.position.y = 12;
-camera.lookAt(0,0, 0)
+camera.position.z = 10;
+camera.position.y = 1;
 scene.add(camera)
 
 /**
@@ -70,8 +69,11 @@ scene.add(camera)
  */
 // Here we place all the Materials and textures
 const textureLoader = new THREE.TextureLoader()
-const matcapTexture = textureLoader.load('matcap/10.png');
-const ellipseMatcapTexture = textureLoader.load('matcap/3.png');
+const matcapTexture = textureLoader.load('matcap/8.png');
+const cubeTexture = textureLoader.load('matcap/9.png');
+
+const fontMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
+const cubeMaterial = new THREE.MeshMatcapMaterial({ matcap: cubeTexture });
 
 /*
 * Lights
@@ -79,119 +81,76 @@ const ellipseMatcapTexture = textureLoader.load('matcap/3.png');
 // Ambient light for realistic shadows
 const ambientLight = new THREE.AmbientLight();
 ambientLight.color = new THREE.Color(0xffffff);
-ambientLight.intensity = 2;
+ambientLight.intensity = 1;
 scene.add(ambientLight);
 
 // Directional Lights
 const directionalLight = new THREE.DirectionalLight(0x00fffc, 3);
-directionalLight.position.set(1, 1.5, 1);
-directionalLight.castShadow=true;
+directionalLight.position.set(1, 1.5, 5);
+directionalLight.castShadow = true;
 scene.add(directionalLight);
 // Directional Light helper
 const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 0.2)
 directionalLightHelper.visible = false
 scene.add(directionalLightHelper)
 
+
+// Array of Cubes
+let cubes = []
+const numberOfCubes = 30;
 /**
  * Fonts
  */
-const fontMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
-const textGroup = new THREE.Group();
 const fontLoader = new THREE.FontLoader();
-fontLoader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json',
+fontLoader.load('fonts/helvetiker_regular.typeface.json',
     (font) => {
-        const size = 0.7;
-        const H = new THREE.TextBufferGeometry('H', {
+        const size = sizes.width < 500 ? 0.2 : 0.4;
+        const height = 0;
+        const H = new THREE.TextBufferGeometry('Hi, I am SUYASH', {
             font: font,
             size: size,
-            height: 0.2,
+            height: height,
             curveSegments: 12,
-            bevelEnabled: true,
-            bevelThickness: 0.03,
-            bevelSize: 0.02,
-            bevelOffset: 0,
-            bevelSegments: 5
+            bevelEnabled: false,
         })
-        const I = new THREE.TextBufferGeometry('i', {
+        const D = new THREE.TextBufferGeometry('a Creative Developer', {
             font: font,
             size: size,
-            height: 0.2,
+            height: height,
             curveSegments: 12,
-            bevelEnabled: true,
-            bevelThickness: 0.03,
-            bevelSize: 0.02,
-            bevelOffset: 0,
-            bevelSegments: 5
+            bevelEnabled: false,
+
         })
         H.center();
-        I.center();
-        const hT = new THREE.Mesh(H, fontMaterial);
-        const iT = new THREE.Mesh(I, fontMaterial);
-        hT.position.set(-0.3, 0, 0);
-        iT.position.set(0.3, -0.5, 0);
-        hT.rotation.set(-Math.PI / 7, Math.PI / 4.5, Math.PI / 6)
-        textGroup.add(hT);
-        textGroup.add(iT);
+        D.center();
+        const textH = new THREE.Mesh(H, fontMaterial);
+        const textD = new THREE.Mesh(D, fontMaterial);
+        textD.position.y = -size - 0.1;
+        scene.add(textD);
+        scene.add(textH);
+
+        const cubeGeometry = new THREE.BoxBufferGeometry(0.4, 0.4, 0.4);
+        // const positionx = []
+        // const positiony = []
+        // const positionz = []
+        const A = Math.PI * 2 / numberOfCubes
+        for (let i = 0; i < numberOfCubes; i++) {
+            const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+            cube.position.x = Math.sin(i*A) * 5
+            cube.position.y = Math.cos(i*A) * 5
+            let z = (Math.random()-0.5) * 10;
+            cube.position.z = z < 5 ? z+((Math.random()-0.5) * 10) : z;
+            cube.rotation.x = Math.random() * Math.PI
+            cube.rotation.y = Math.random() * Math.PI
+            scene.add(cube);
+            // positionx.push(cube.position.x)
+            // positiony.push(cube.position.y)
+            // positionz.push(cube.position.z)
+            cubes.push(cube);
+        }
+        // console.log(positionx, positiony, positionz)
     }
 )
-textGroup.rotation.set(-Math.PI / 7, Math.PI / 9, Math.PI / 4);
-textGroup.scale.set(1.5, 1.5, 1.5)
-scene.add(textGroup);
-
-
-/**
- * Elliptical Curve
- */
-const ellipseMaterial = new THREE.MeshMatcapMaterial({ matcap: ellipseMatcapTexture });
-const ellipseGeometry1 = new THREE.TorusBufferGeometry(3, 0.005, 100, 200);
-const ellipseGeometry2 = new THREE.TorusBufferGeometry(4, 0.005, 100, 200);
-const ellipseGeometry3 = new THREE.TorusBufferGeometry(6, 0.005, 100, 200);
-const ellipseGeometry4 = new THREE.TorusBufferGeometry(7, 0.005, 100, 200);
-const ellipseGeometry5 = new THREE.TorusBufferGeometry(8, 0.005, 100, 200);
-const ellipseGeometry6 = new THREE.TorusBufferGeometry(9.6, 0.005, 100, 200);
-const ellipseGeometry7 = new THREE.TorusBufferGeometry(10, 0.005, 100, 200);
-const ellipseGeometry8 = new THREE.TorusBufferGeometry(11, 0.005, 100, 200);
-const ellipseGeometry9 = new THREE.TorusBufferGeometry(11.6, 0.005, 100, 200);
-///////////////////////////////////////////////////////////////////////
-const ellipse1 = new THREE.Mesh(ellipseGeometry1, ellipseMaterial)
-const ellipse2 = new THREE.Mesh(ellipseGeometry2, ellipseMaterial)
-const ellipse3 = new THREE.Mesh(ellipseGeometry3, ellipseMaterial)
-const ellipse4 = new THREE.Mesh(ellipseGeometry4, ellipseMaterial)
-const ellipse5 = new THREE.Mesh(ellipseGeometry5, ellipseMaterial)
-const ellipse6 = new THREE.Mesh(ellipseGeometry6, ellipseMaterial)
-const ellipse7 = new THREE.Mesh(ellipseGeometry7, ellipseMaterial)
-const ellipse8 = new THREE.Mesh(ellipseGeometry8, ellipseMaterial)
-const ellipse9 = new THREE.Mesh(ellipseGeometry9, ellipseMaterial)
-////////////////////////////////////////////////////////////////////
-// 1
-ellipse1.rotation.set(9*(Math.PI/18), -Math.PI/12, 0)
-// 2
-ellipse2.rotation.set(9*(Math.PI/18), -Math.PI/12, 0)
-// 3
-ellipse3.rotation.set(9*(Math.PI/18), -Math.PI/12, 0)
-// 4
-ellipse4.rotation.set(9*(Math.PI/18), -Math.PI/12, 0)
-// 5
-ellipse5.rotation.set(9*(Math.PI/18), -Math.PI/12, 0)
-// 6
-ellipse6.rotation.set(9*(Math.PI/18), -Math.PI/12, 0)
-// 7
-ellipse7.rotation.set(9*(Math.PI/18), -Math.PI/12, 0)
-// 8
-ellipse8.rotation.set(9*(Math.PI/18), -Math.PI/12, 0)
-// 9
-ellipse9.rotation.set(9*(Math.PI/18), -Math.PI/12, 0)
-///////////////////////////////////////////////////////////////////
-scene.add(ellipse1);
-scene.add(ellipse2);
-scene.add(ellipse3);
-scene.add(ellipse4);
-scene.add(ellipse5);
-scene.add(ellipse6);
-scene.add(ellipse7);
-scene.add(ellipse8);
-scene.add(ellipse9);
-
 
 /**
  * Renderer
@@ -208,17 +167,20 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
  */
 const clock = new THREE.Clock()
 // Controls
-// const controls = new OrbitControls(camera, canvas)
-// controls.enableDamping = false
+const controls = new OrbitControls(camera, canvas)
+controls.enableDamping = false
+controls.enabled = false
 
 const tick = () => {
-    const elapsedTime = clock.getElapsedTime()
-
-    textGroup.rotation.z = 0.15 * elapsedTime
-    textGroup.rotation.y = 0.15 * elapsedTime
-
+    // const elapsedTime = clock.getElapsedTime()
+    for (let i = 0; i < numberOfCubes; i++) {
+        if (cubes[i]) {
+            cubes[i].rotation.x += Math.random() * 0.01 - 0.008;
+            cubes[i].rotation.y += Math.random() * 0.01 - 0.008;
+        }
+    }
     // Update controls
-    // controls.update()
+    controls.update()
     // Render
     renderer.render(scene, camera)
 
