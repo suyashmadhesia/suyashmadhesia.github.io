@@ -3,12 +3,24 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 // Canvas
-const canvas = document.querySelector('canvas.webgl')
+// const canvas = document.querySelector('canvas.webgl')
 
 // Scene
 const scene = new THREE.Scene()
-scene.background = new THREE.Color(0x000005)
+scene.background = new THREE.Color(0x000010)
+const aboutMeButton = document.getElementById('aboutMe')
+const aboutMe = () => {
+    // Do something
+    console.log("hello");
+}
+aboutMeButton.addEventListener("click", aboutMe);
 
+const loadingHTML = () => {
+    const loadingHTML = document.getElementById("loading");
+    const main = document.getElementById("main");
+    loadingHTML.classList.add("view");
+    main.classList.remove("view");
+}
 /**
  * Sizes
  */
@@ -17,6 +29,16 @@ const sizes = {
     height: window.innerHeight
 }
 
+/*
+* Cursor
+*/
+const cursor = {}
+cursor.x = 0
+cursor.y = 0
+
+/**
+ * Listeners
+ */
 window.addEventListener('resize', () => {
     // Update sizes
     sizes.width = window.innerWidth
@@ -29,6 +51,12 @@ window.addEventListener('resize', () => {
     // Update renderer
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+})
+
+
+window.addEventListener('mousemove', (e) => {
+    cursor.x = e.clientX / sizes.width - 0.5
+    cursor.y = e.clientY / sizes.height - 0.5
 })
 
 /**
@@ -53,27 +81,50 @@ window.addEventListener('dblclick', () => {
             document.webkitExitFullscreen()
         }
     }
+
 })
+
+
+
 
 /**
  * Camera
  */
 // Base camera
-const camera = new THREE.PerspectiveCamera(60, sizes.width / sizes.height, 0.1, 100)
-camera.position.z = 10;
-camera.position.y = 1;
-scene.add(camera)
+const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 100)
+const cameraGroup = new THREE.Group()
+camera.position.z = 6;
 
+scene.add(camera)
+cameraGroup.add(camera);
+scene.add(cameraGroup)
+
+
+
+let textureLoaded1 = false;
+let textureLoaded2 = false;
 /**
  * Textures
  */
 // Here we place all the Materials and textures
 const textureLoader = new THREE.TextureLoader()
-const matcapTexture = textureLoader.load('matcap/8.png');
-const cubeTexture = textureLoader.load('matcap/9.png');
+const matcapTexture = textureLoader.load('matcap/9.png', (texture) => {
+    textureLoaded1 = true
+});
+const cubeTexture = textureLoader.load('matcap/10.png', (texture) => {
+    textureLoaded2 = true;
+});
 
-const fontMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
-const cubeMaterial = new THREE.MeshMatcapMaterial({ matcap: cubeTexture });
+const randomObjectMaterial2 = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
+const randomObjectMaterial = new THREE.MeshMatcapMaterial({ matcap: cubeTexture });
+const particlesMaterial = new THREE.PointsMaterial({
+    color: '#ffeded',
+    sizeAttenuation: true,
+    size: 0.05
+})
+
+
+
 
 /*
 * Lights
@@ -85,7 +136,7 @@ ambientLight.intensity = 1;
 scene.add(ambientLight);
 
 // Directional Lights
-const directionalLight = new THREE.DirectionalLight(0x00fffc, 3);
+const directionalLight = new THREE.DirectionalLight(0x00fffc, 2);
 directionalLight.position.set(1, 1.5, 5);
 directionalLight.castShadow = true;
 scene.add(directionalLight);
@@ -95,97 +146,134 @@ directionalLightHelper.visible = false
 scene.add(directionalLightHelper)
 
 
+
+
 // Array of Cubes
-let cubes = []
-const numberOfCubes = 30;
-/**
- * Fonts
- */
-const fontLoader = new THREE.FontLoader();
-fontLoader.load('fonts/helvetiker_regular.typeface.json',
-    (font) => {
-        const size = sizes.width < 500 ? 0.2 : 0.4;
-        const height = 0;
-        const H = new THREE.TextBufferGeometry('Hi, I am SUYASH', {
-            font: font,
-            size: size,
-            height: height,
-            curveSegments: 12,
-            bevelEnabled: false,
-        })
-        const D = new THREE.TextBufferGeometry('a Creative Developer', {
-            font: font,
-            size: size,
-            height: height,
-            curveSegments: 12,
-            bevelEnabled: false,
-
-        })
-        H.center();
-        D.center();
-        const textH = new THREE.Mesh(H, fontMaterial);
-        const textD = new THREE.Mesh(D, fontMaterial);
-        textD.position.y = -size - 0.1;
-        scene.add(textD);
-        scene.add(textH);
-
-        const cubeGeometry = new THREE.BoxBufferGeometry(0.4, 0.4, 0.4);
-        // const positionx = []
-        // const positiony = []
-        // const positionz = []
-        const A = Math.PI * 2 / numberOfCubes
-        for (let i = 0; i < numberOfCubes; i++) {
-            const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-            cube.position.x = Math.sin(i*A) * 5
-            cube.position.y = Math.cos(i*A) * 5
-            let z = (Math.random()-0.5) * 10;
-            cube.position.z = z < 5 ? z+((Math.random()-0.5) * 10) : z;
-            cube.rotation.x = Math.random() * Math.PI
-            cube.rotation.y = Math.random() * Math.PI
-            scene.add(cube);
-            // positionx.push(cube.position.x)
-            // positiony.push(cube.position.y)
-            // positionz.push(cube.position.z)
-            cubes.push(cube);
+let objects = []
+const numberOfObjects = 15;
+const cubeGeometry = new THREE.BoxBufferGeometry(0.3, 0.3, 0.3);
+const coneGeometry = new THREE.ConeBufferGeometry(0.2, 0.3, 32);
+// const positionx = []
+// const positiony = []
+// const positionz = []
+const A = Math.PI * 2 / numberOfObjects
+for (let i = 0; i < numberOfObjects; i++) {
+    let randomG = Math.random() * 10;
+    let randomX = (Math.random() - 0.5) * 10
+    if (sizes.width < 700) {
+        if (randomX > 3) {
+            randomX = randomX - 2;
         }
-        // console.log(positionx, positiony, positionz)
+        else if (randomX < 0 && randomX < -3) {
+            randomX = randomX + 1;
+        }
     }
-)
+    let randomY = (Math.random() - 0.5) * 10;
+    if (randomG > 2) {
+        const cube = new THREE.Mesh(cubeGeometry, randomObjectMaterial2);
+        objects.push(cube);
+        cube.position.x = randomX
+        cube.position.y = randomY
+        cube.position.z = -Math.random() * 10
+        cube.rotation.x = Math.random() * Math.PI
+        cube.rotation.y = Math.random() * Math.PI
+        scene.add(cube);
+    }
+    else {
+        const cone = new THREE.Mesh(coneGeometry, randomObjectMaterial);
+        objects.push(cone);
+        cone.position.x = randomX;
+        cone.position.y = randomY;
+        cone.position.z = -Math.random() * 10
+        cone.rotation.x = Math.random() * Math.PI
+        cone.rotation.y = Math.random() * Math.PI
+        scene.add(cone);
+    }
+}
+
+
+/**
+ * Particles
+ */
+// Geometry
+const objectsDistance = 4
+const particlesCount = 300
+const positions = new Float32Array(particlesCount * 3)
+for (let i = 0; i < particlesCount; i++) {
+    positions[i * 3 + 0] = Math.random()
+    positions[i * 3 + 1] = Math.random()
+    positions[i * 3 + 2] = Math.random()
+}
+const particlesGeometry = new THREE.BufferGeometry()
+particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+// Points
+const particles = new THREE.Points(particlesGeometry, particlesMaterial)
+for (let i = 0; i < particlesCount; i++) {
+    positions[i * 3 + 0] = (Math.random() - 0.5) * 10
+    positions[i * 3 + 1] = objectsDistance * 0.5 - Math.random() * objectsDistance * 3
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 10
+}
+scene.add(particles)
+
+
+
 
 /**
  * Renderer
  */
 const renderer = new THREE.WebGLRenderer({
-    canvas: canvas,
+    // canvas: canvas,
     antialias: true
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+document.body.appendChild(renderer.domElement);
+
+
+// Controls
+const controls = new OrbitControls(camera, renderer.domElement)
+controls.enableDamping = false
+controls.enabled = false
+
 
 /**
  * Animate
  */
 const clock = new THREE.Clock()
-// Controls
-const controls = new OrbitControls(camera, canvas)
-controls.enableDamping = false
-controls.enabled = false
-
+let flag = 0;
+let previousTime = 0
 const tick = () => {
-    // const elapsedTime = clock.getElapsedTime()
-    for (let i = 0; i < numberOfCubes; i++) {
-        if (cubes[i]) {
-            cubes[i].rotation.x += Math.random() * 0.01 - 0.008;
-            cubes[i].rotation.y += Math.random() * 0.01 - 0.008;
+
+    const elapsedTime = clock.getElapsedTime()
+    const deltaTime = elapsedTime - previousTime
+    previousTime = elapsedTime
+    for (let i = 0; i < numberOfObjects; i++) {
+        if (objects[i]) {
+            objects[i].rotation.x += Math.PI / 180 * 0.2
+            objects[i].rotation.y += Math.PI / 180 * 0.2
         }
     }
+    if (flag == 0) {
+        cameraGroup.position.x = -8
+        cameraGroup.position.y = 7
+        flag = 1;
+    }
+    if (textureLoaded1 && textureLoaded2) {
+        loadingHTML()
+    }
+    const parallaxX = cursor.x * 0.4
+    const parallaxY = - cursor.y * 0.4
+
+    cameraGroup.position.x += (parallaxX - cameraGroup.position.x) * 5 * deltaTime
+    cameraGroup.position.y += (parallaxY - cameraGroup.position.y) * 5 * deltaTime
+
     // Update controls
     controls.update()
     // Render
     renderer.render(scene, camera)
 
     // Call tick again on the next frame
+
     window.requestAnimationFrame(tick)
 }
-
 tick()
