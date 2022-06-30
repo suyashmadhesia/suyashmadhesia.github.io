@@ -1,13 +1,16 @@
 import './style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import * as dat from 'dat.gui';
 
 // Canvas
-// const canvas = document.querySelector('canvas.webgl')
+const canvas = document.querySelector('canvas.webgl')
 
+// Global Used in all values
+let objects = []
+// const gui = new dat.GUI();
 // Scene
 const scene = new THREE.Scene()
-scene.background = new THREE.Color(0x000010)
 const aboutMeButton = document.getElementById('aboutMe')
 const aboutMe = () => {
     // Do something
@@ -17,9 +20,9 @@ aboutMeButton.addEventListener("click", aboutMe);
 
 const loadingHTML = () => {
     const loadingHTML = document.getElementById("loading");
-    const main = document.getElementById("main");
+    const body = document.querySelector("body");
     loadingHTML.classList.add("view");
-    main.classList.remove("view");
+    body.classList.remove("body");
 }
 /**
  * Sizes
@@ -36,9 +39,28 @@ const cursor = {}
 cursor.x = 0
 cursor.y = 0
 
+
+/**
+ * Scroll Constant
+ */
+
+let scrollY = window.scrollY
+let currentSection = 0
+
 /**
  * Listeners
  */
+
+window.addEventListener('scroll', () => {
+    scrollY = window.scrollY
+    const newSection = Math.round(scrollY / sizes.height)
+    if (newSection != currentSection) {
+        currentSection = newSection
+    }
+
+    // console.log(newSection)
+})
+
 window.addEventListener('resize', () => {
     // Update sizes
     sizes.width = window.innerWidth
@@ -60,29 +82,30 @@ window.addEventListener('mousemove', (e) => {
 })
 
 /**
- * Fullscreen
+ * Fullscreen 
  */
-window.addEventListener('dblclick', () => {
-    const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
+// implement some fun stuff with double click event
+// window.addEventListener('dblclick', () => {
+//     const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
 
-    if (!fullscreenElement) {
-        if (canvas.requestFullscreen) {
-            canvas.requestFullscreen()
-        }
-        else if (canvas.webkitRequestFullscreen) {
-            canvas.webkitRequestFullscreen()
-        }
-    }
-    else {
-        if (document.exitFullscreen) {
-            document.exitFullscreen()
-        }
-        else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen()
-        }
-    }
+//     if (!fullscreenElement) {
+//         if (canvas.requestFullscreen) {
+//             canvas.requestFullscreen()
+//         }
+//         else if (canvas.webkitRequestFullscreen) {
+//             canvas.webkitRequestFullscreen()
+//         }
+//     }
+//     else {
+//         if (document.exitFullscreen) {
+//             document.exitFullscreen()
+//         }
+//         else if (document.webkitExitFullscreen) {
+//             document.webkitExitFullscreen()
+//         }
+//     }
 
-})
+// })
 
 
 
@@ -94,10 +117,12 @@ window.addEventListener('dblclick', () => {
 const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 100)
 const cameraGroup = new THREE.Group()
 camera.position.z = 6;
-
+camera.position.x = 0;
+camera.position.y = 0;
 scene.add(camera)
-cameraGroup.add(camera);
+cameraGroup.add(camera)
 scene.add(cameraGroup)
+
 
 
 
@@ -108,10 +133,10 @@ let textureLoaded2 = false;
  */
 // Here we place all the Materials and textures
 const textureLoader = new THREE.TextureLoader()
-const matcapTexture = textureLoader.load('matcap/9.png', (texture) => {
+const matcapTexture = textureLoader.load('textures/matcap/9.png', (texture) => {
     textureLoaded1 = true
 });
-const cubeTexture = textureLoader.load('matcap/10.png', (texture) => {
+const cubeTexture = textureLoader.load('textures/matcap/10.png', (texture) => {
     textureLoaded2 = true;
 });
 
@@ -132,11 +157,11 @@ const particlesMaterial = new THREE.PointsMaterial({
 // Ambient light for realistic shadows
 const ambientLight = new THREE.AmbientLight();
 ambientLight.color = new THREE.Color(0xffffff);
-ambientLight.intensity = 1;
+ambientLight.intensity = 0.5;
 scene.add(ambientLight);
 
 // Directional Lights
-const directionalLight = new THREE.DirectionalLight(0x00fffc, 2);
+const directionalLight = new THREE.DirectionalLight(0x00fffc, 1);
 directionalLight.position.set(1, 1.5, 5);
 directionalLight.castShadow = true;
 scene.add(directionalLight);
@@ -149,13 +174,10 @@ scene.add(directionalLightHelper)
 
 
 // Array of Cubes
-let objects = []
-const numberOfObjects = 15;
+
+const numberOfObjects = 20;
 const cubeGeometry = new THREE.BoxBufferGeometry(0.3, 0.3, 0.3);
 const coneGeometry = new THREE.ConeBufferGeometry(0.2, 0.3, 32);
-// const positionx = []
-// const positiony = []
-// const positionz = []
 const A = Math.PI * 2 / numberOfObjects
 for (let i = 0; i < numberOfObjects; i++) {
     let randomG = Math.random() * 10;
@@ -168,13 +190,14 @@ for (let i = 0; i < numberOfObjects; i++) {
             randomX = randomX + 1;
         }
     }
-    let randomY = (Math.random() - 0.5) * 10;
-    if (randomG > 2) {
+    let randomY = 5 * 0.5 - Math.random() * 1.6 * 3
+    let randomZ = (Math.random()-0.5) * 4
+    if (randomG > 1 && randomG < 8) {
         const cube = new THREE.Mesh(cubeGeometry, randomObjectMaterial2);
         objects.push(cube);
         cube.position.x = randomX
         cube.position.y = randomY
-        cube.position.z = -Math.random() * 10
+        cube.position.z = randomZ
         cube.rotation.x = Math.random() * Math.PI
         cube.rotation.y = Math.random() * Math.PI
         scene.add(cube);
@@ -184,7 +207,7 @@ for (let i = 0; i < numberOfObjects; i++) {
         objects.push(cone);
         cone.position.x = randomX;
         cone.position.y = randomY;
-        cone.position.z = -Math.random() * 10
+        cone.position.z = randomZ
         cone.rotation.x = Math.random() * Math.PI
         cone.rotation.y = Math.random() * Math.PI
         scene.add(cone);
@@ -210,7 +233,7 @@ particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 
 const particles = new THREE.Points(particlesGeometry, particlesMaterial)
 for (let i = 0; i < particlesCount; i++) {
     positions[i * 3 + 0] = (Math.random() - 0.5) * 10
-    positions[i * 3 + 1] = objectsDistance * 0.5 - Math.random() * objectsDistance * 3
+    positions[i * 3 + 1] = objectsDistance * 0.5 - Math.random() * 4.7 * 3
     positions[i * 3 + 2] = (Math.random() - 0.5) * 10
 }
 scene.add(particles)
@@ -222,18 +245,20 @@ scene.add(particles)
  * Renderer
  */
 const renderer = new THREE.WebGLRenderer({
-    // canvas: canvas,
+    canvas: canvas,
+    alpha: true,
     antialias: true
 })
+renderer.setClearColor(0x000000, 0);
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-document.body.appendChild(renderer.domElement);
+// document.body.appendChild(renderer.domElement);
 
 
 // Controls
-const controls = new OrbitControls(camera, renderer.domElement)
-controls.enableDamping = false
-controls.enabled = false
+// const controls = new OrbitControls(camera, renderer.domElement)
+// controls.enableDamping = false
+// controls.enabled = false
 
 
 /**
@@ -247,33 +272,38 @@ const tick = () => {
     const elapsedTime = clock.getElapsedTime()
     const deltaTime = elapsedTime - previousTime
     previousTime = elapsedTime
+
     for (let i = 0; i < numberOfObjects; i++) {
         if (objects[i]) {
             objects[i].rotation.x += Math.PI / 180 * 0.2
             objects[i].rotation.y += Math.PI / 180 * 0.2
         }
     }
-    if (flag == 0) {
-        cameraGroup.position.x = -8
-        cameraGroup.position.y = 7
-        flag = 1;
-    }
+
     if (textureLoaded1 && textureLoaded2) {
+        if (flag == 0) {
+            cameraGroup.position.x = -5
+            cameraGroup.position.y = 5
+            flag = 1;
+        }
         loadingHTML()
+        textureLoaded1 = false;
+        textureLoaded2 = false;
     }
+
     const parallaxX = cursor.x * 0.4
     const parallaxY = - cursor.y * 0.4
-
+    camera.position.y = -scrollY / sizes.height * objectsDistance
     cameraGroup.position.x += (parallaxX - cameraGroup.position.x) * 5 * deltaTime
     cameraGroup.position.y += (parallaxY - cameraGroup.position.y) * 5 * deltaTime
 
     // Update controls
-    controls.update()
+    // controls.update()
+
     // Render
     renderer.render(scene, camera)
 
     // Call tick again on the next frame
-
     window.requestAnimationFrame(tick)
 }
 tick()

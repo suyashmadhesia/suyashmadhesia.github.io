@@ -2,18 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    overflow: hidden;
+* {
     margin: 0;
     font-family: 'Montserrat';
+    padding: 0;
 }
 
-.ui {
-    position: absolute;
+html {
+    background: #000010;
+}
+
+.body {
+    overflow: hidden;
 }
 
 button {
-    margin: 20px;
+    margin: 0.75rem;
 }
 
 .view {
@@ -63,10 +67,26 @@ button {
     }
 }
 
-/* .webgl
-{
+.webgl {
     position: fixed;
     top: 0;
     left: 0;
-    outline: none;
-} */
+}
+
+
+.section {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    overflow: auto;
+}
+
+section:nth-child(odd) {
+    justify-content: flex-end;
+}
+
+body::-webkit-scrollbar {
+    width: 0;
+}
+
