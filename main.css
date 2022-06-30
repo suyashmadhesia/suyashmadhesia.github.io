@@ -508,6 +508,9 @@ video {
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
+.fixed {
+  position: fixed;
+}
 .absolute {
   position: absolute;
 }
@@ -523,14 +526,29 @@ video {
 .right-0 {
   right: 0px;
 }
+.bottom-4 {
+  bottom: 1rem;
+}
+.z-30 {
+  z-index: 30;
+}
+.z-40 {
+  z-index: 40;
+}
 .m-auto {
   margin: auto;
+}
+.m-4 {
+  margin: 1rem;
 }
 .ml-4 {
   margin-left: 1rem;
 }
 .flex {
   display: flex;
+}
+.items-center {
+  align-items: center;
 }
 .rounded-lg {
   border-radius: 0.5rem;
@@ -557,6 +575,12 @@ video {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
+.pt-3 {
+  padding-top: 0.75rem;
+}
+.text-center {
+  text-align: center;
+}
 .font-sans {
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
@@ -568,23 +592,35 @@ video {
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
 .text-white {
   --tw-text-opacity: 1;
   color: rgba(255, 255, 255, var(--tw-text-opacity));
 }
 
-body {
-    overflow: hidden;
+* {
     margin: 0;
     font-family: 'Montserrat';
+    padding: 0;
 }
 
-.ui {
-    position: absolute;
+html {
+    background: #000010;
+}
+
+.body {
+    overflow: hidden;
 }
 
 button {
-    margin: 20px;
+    margin: 0.75rem;
 }
 
 .view {
@@ -648,13 +684,28 @@ button {
     }
 }
 
-/* .webgl
-{
+.webgl {
     position: fixed;
     top: 0;
     left: 0;
-    outline: none;
-} */
+}
+
+
+.section {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    overflow: auto;
+}
+
+section:nth-child(odd) {
+    justify-content: flex-end;
+}
+
+body::-webkit-scrollbar {
+    width: 0;
+}
 
 .hover\:bg-indigo-800:hover {
   --tw-bg-opacity: 1;
@@ -676,9 +727,22 @@ button {
     font-size: 1.125rem;
     line-height: 1.75rem;
   }
+
+  .md\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
 }
 
 @media (min-width: 1024px) {
+
+  .lg\:bottom-6 {
+    bottom: 1.5rem;
+  }
+
+  .lg\:m-6 {
+    margin: 1.5rem;
+  }
 
   .lg\:ml-8 {
     margin-left: 2rem;
@@ -693,6 +757,13 @@ button {
     font-size: 1.25rem;
     line-height: 1.75rem;
   }
+
+  .lg\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
 }
+
+
 
 /*# sourceMappingURL=main.css.map*/
