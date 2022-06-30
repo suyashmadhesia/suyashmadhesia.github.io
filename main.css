@@ -511,8 +511,14 @@ video {
 .fixed {
   position: fixed;
 }
-.absolute {
-  position: absolute;
+.bottom-4 {
+  bottom: 1rem;
+}
+.right-0 {
+  right: 0px;
+}
+.left-0 {
+  left: 0px;
 }
 .top-0 {
   top: 0px;
@@ -520,26 +526,17 @@ video {
 .bottom-0 {
   bottom: 0px;
 }
-.left-0 {
-  left: 0px;
-}
-.right-0 {
-  right: 0px;
-}
-.bottom-4 {
-  bottom: 1rem;
-}
 .z-30 {
   z-index: 30;
 }
 .z-40 {
   z-index: 40;
 }
-.m-auto {
-  margin: auto;
-}
 .m-4 {
   margin: 1rem;
+}
+.m-auto {
+  margin: auto;
 }
 .ml-4 {
   margin-left: 1rem;
