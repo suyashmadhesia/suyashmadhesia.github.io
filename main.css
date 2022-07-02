@@ -511,26 +511,26 @@ video {
 .fixed {
   position: fixed;
 }
-.bottom-4 {
-  bottom: 1rem;
-}
-.right-0 {
-  right: 0px;
-}
-.left-0 {
-  left: 0px;
-}
 .top-0 {
   top: 0px;
 }
 .bottom-0 {
   bottom: 0px;
 }
-.z-30 {
-  z-index: 30;
+.left-0 {
+  left: 0px;
+}
+.right-0 {
+  right: 0px;
+}
+.bottom-4 {
+  bottom: 1rem;
 }
 .z-40 {
   z-index: 40;
+}
+.z-30 {
+  z-index: 30;
 }
 .m-4 {
   margin: 1rem;
@@ -553,9 +553,9 @@ video {
 .border-2 {
   border-width: 2px;
 }
-.border-indigo-800 {
+.border-yellow-400 {
   --tw-border-opacity: 1;
-  border-color: rgba(55, 48, 163, var(--tw-border-opacity));
+  border-color: rgba(250, 204, 21, var(--tw-border-opacity));
 }
 .bg-transparent {
   background-color: transparent;
@@ -564,13 +564,16 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
 }
-.px-5 {
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+.pt-2 {
+  padding-top: 0.5rem;
 }
 .pt-3 {
   padding-top: 0.75rem;
@@ -601,6 +604,10 @@ video {
   --tw-text-opacity: 1;
   color: rgba(255, 255, 255, var(--tw-text-opacity));
 }
+.text-yellow-400 {
+  --tw-text-opacity: 1;
+  color: rgba(250, 204, 21, var(--tw-text-opacity));
+}
 
 * {
     margin: 0;
@@ -609,7 +616,7 @@ video {
 }
 
 html {
-    background: #000010;
+    background: #100027;
 }
 
 .body {
@@ -704,9 +711,9 @@ body::-webkit-scrollbar {
     width: 0;
 }
 
-.hover\:bg-indigo-800:hover {
+.hover\:bg-yellow-400:hover {
   --tw-bg-opacity: 1;
-  background-color: rgba(55, 48, 163, var(--tw-bg-opacity));
+  background-color: rgba(250, 204, 21, var(--tw-bg-opacity));
 }
 
 @media (min-width: 700px) {
@@ -715,14 +722,13 @@ body::-webkit-scrollbar {
     margin-left: 1.5rem;
   }
 
+  .md\:pt-3 {
+    padding-top: 0.75rem;
+  }
+
   .md\:text-4xl {
     font-size: 2.25rem;
     line-height: 2.5rem;
-  }
-
-  .md\:text-lg {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
   }
 
   .md\:text-base {
@@ -743,6 +749,10 @@ body::-webkit-scrollbar {
 
   .lg\:ml-8 {
     margin-left: 2rem;
+  }
+
+  .lg\:pt-4 {
+    padding-top: 1rem;
   }
 
   .lg\:text-5xl {
