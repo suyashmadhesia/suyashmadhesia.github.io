@@ -11,12 +11,12 @@ let objects = []
 // const gui = new dat.GUI();
 // Scene
 const scene = new THREE.Scene()
-const aboutMeButton = document.getElementById('aboutMe')
-const aboutMe = () => {
-    // Do something
-    console.log("hello");
-}
-aboutMeButton.addEventListener("click", aboutMe);
+// const aboutMeButton = document.getElementById('cv')
+// const aboutMe = () => {
+//     // Do something
+//     console.log("hello");
+// }
+// aboutMeButton.addEventListener("click", aboutMe);
 
 const loadingHTML = () => {
     const loadingHTML = document.getElementById("loading");
@@ -176,11 +176,11 @@ scene.add(directionalLightHelper)
 // Array of Cubes
 
 const numberOfObjects = 20;
-const cubeGeometry = new THREE.BoxBufferGeometry(0.3, 0.3, 0.3);
-const coneGeometry = new THREE.ConeBufferGeometry(0.2, 0.3, 32);
+const cubeGeometry = new THREE.BoxBufferGeometry(0.22, 0.22, 0.22);
+// const coneGeometry = new THREE.ConeBufferGeometry(0.2, 0.3, 32);
 const A = Math.PI * 2 / numberOfObjects
 for (let i = 0; i < numberOfObjects; i++) {
-    let randomG = Math.random() * 10;
+    // let randomG = Math.random() * 10;
     let randomX = (Math.random() - 0.5) * 10
     if (sizes.width < 700) {
         if (randomX > 3) {
@@ -191,27 +191,27 @@ for (let i = 0; i < numberOfObjects; i++) {
         }
     }
     let randomY = 5 * 0.5 - Math.random() * 1.6 * 3
-    let randomZ = (Math.random()-0.5) * 4
-    if (randomG > 1 && randomG < 8) {
-        const cube = new THREE.Mesh(cubeGeometry, randomObjectMaterial2);
-        objects.push(cube);
-        cube.position.x = randomX
-        cube.position.y = randomY
-        cube.position.z = randomZ
-        cube.rotation.x = Math.random() * Math.PI
-        cube.rotation.y = Math.random() * Math.PI
-        scene.add(cube);
-    }
-    else {
-        const cone = new THREE.Mesh(coneGeometry, randomObjectMaterial);
-        objects.push(cone);
-        cone.position.x = randomX;
-        cone.position.y = randomY;
-        cone.position.z = randomZ
-        cone.rotation.x = Math.random() * Math.PI
-        cone.rotation.y = Math.random() * Math.PI
-        scene.add(cone);
-    }
+    let randomZ = (Math.random() - 0.5) * 4
+
+    const cube = new THREE.Mesh(cubeGeometry, randomObjectMaterial2);
+    objects.push(cube);
+    cube.position.x = randomX
+    cube.position.y = randomY
+    cube.position.z = randomZ
+    cube.rotation.x = Math.random() * Math.PI
+    cube.rotation.y = Math.random() * Math.PI
+    scene.add(cube);
+
+    // else {
+    //     const cone = new THREE.Mesh(coneGeometry, randomObjectMaterial);
+    //     objects.push(cone);
+    //     cone.position.x = randomX;
+    //     cone.position.y = randomY;
+    //     cone.position.z = randomZ
+    //     cone.rotation.x = Math.random() * Math.PI
+    //     cone.rotation.y = Math.random() * Math.PI
+    //     scene.add(cone);
+    // }
 }
 
 
