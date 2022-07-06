@@ -1,5 +1,6 @@
 import './style.css'
 import * as THREE from 'three'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui';
 
@@ -11,12 +12,22 @@ let objects = []
 // const gui = new dat.GUI();
 // Scene
 const scene = new THREE.Scene()
-// const aboutMeButton = document.getElementById('cv')
-// const aboutMe = () => {
-//     // Do something
-//     console.log("hello");
-// }
-// aboutMeButton.addEventListener("click", aboutMe);
+const menu = document.getElementById("menu")
+let showMenuBool = false;
+const showMenu = () => {
+    const showMenuDiv = document.getElementById("menu-list")
+    const menuIcon = document.getElementById("menu-icon")
+    if (showMenuBool == true) {
+        showMenuDiv.classList.add('menu-list')
+        menuIcon.innerHTML = "menu"
+        showMenuBool = false
+    } else {
+        showMenuBool = true
+        menuIcon.innerHTML = "close"
+        showMenuDiv.classList.remove('menu-list')
+    }
+}
+menu.addEventListener("click", showMenu);
 
 const loadingHTML = () => {
     const loadingHTML = document.getElementById("loading");
@@ -80,6 +91,10 @@ window.addEventListener('mousemove', (e) => {
     cursor.x = e.clientX / sizes.width - 0.5
     cursor.y = e.clientY / sizes.height - 0.5
 })
+
+// if (sizes.width < 500) {
+//     alert("This site is not viewed properly on mobile devices. Please use a desktop or laptop for better experience.")
+// }
 
 /**
  * Fullscreen 
@@ -148,9 +163,23 @@ const particlesMaterial = new THREE.PointsMaterial({
     size: 0.05
 })
 
-
-
-
+// GLTF Model Loader
+// const gltfLoader = new GLTFLoader();
+// const gltfGroup = new THREE.Group()
+// gltfLoader.load(
+//     '/models/macbook.gltf',
+//     (gltf) => {
+//         // while(gltf.scene.children.length){
+//         //     scene.add(gltf.scene.children[0])
+//         // }
+//     //    console.log(gltf)
+//         gltfGroup.add(gltf.scene)
+//         gltfGroup.position.y = -1
+//         scene.add(gltfGroup)
+//     }, 
+//     () => { },
+//     () => { }
+// )
 /*
 * Lights
 */

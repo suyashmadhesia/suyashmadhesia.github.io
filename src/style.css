@@ -73,6 +73,11 @@ button {
     left: 0;
 }
 
+.menu-list{
+    visibility: hidden;
+    display: none;
+}
+
 
 .section {
     display: flex;
