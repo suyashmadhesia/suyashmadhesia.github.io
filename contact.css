@@ -538,9 +538,6 @@ video {
 .m-auto {
   margin: auto;
 }
-.ml-4 {
-  margin-left: 1rem;
-}
 .mt-4 {
   margin-top: 1rem;
 }
@@ -552,6 +549,9 @@ video {
 }
 .mr-1 {
   margin-right: 0.25rem;
+}
+.ml-4 {
+  margin-left: 1rem;
 }
 .mt-5 {
   margin-top: 1.25rem;
@@ -605,6 +605,10 @@ video {
 .font-sans {
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
@@ -612,10 +616,6 @@ video {
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
-}
-.text-xl {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
 }
 .text-white {
   --tw-text-opacity: 1;
@@ -643,10 +643,6 @@ video {
 
 @media (min-width: 700px) {
 
-  .md\:ml-6 {
-    margin-left: 1.5rem;
-  }
-
   .md\:mt-6 {
     margin-top: 1.5rem;
   }
@@ -657,6 +653,10 @@ video {
 
   .md\:mr-2 {
     margin-right: 0.5rem;
+  }
+
+  .md\:ml-6 {
+    margin-left: 1.5rem;
   }
 
   .md\:pt-3 {
@@ -684,10 +684,6 @@ video {
     margin: 1.5rem;
   }
 
-  .lg\:ml-8 {
-    margin-left: 2rem;
-  }
-
   .lg\:mt-7 {
     margin-top: 1.75rem;
   }
@@ -698,6 +694,10 @@ video {
 
   .lg\:mr-3 {
     margin-right: 0.75rem;
+  }
+
+  .lg\:ml-8 {
+    margin-left: 2rem;
   }
 
   .lg\:pt-4 {
