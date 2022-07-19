@@ -92,36 +92,6 @@ window.addEventListener('mousemove', (e) => {
     cursor.y = e.clientY / sizes.height - 0.5
 })
 
-// if (sizes.width < 500) {
-//     alert("This site is not viewed properly on mobile devices. Please use a desktop or laptop for better experience.")
-// }
-
-/**
- * Fullscreen 
- */
-// implement some fun stuff with double click event
-// window.addEventListener('dblclick', () => {
-//     const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement
-
-//     if (!fullscreenElement) {
-//         if (canvas.requestFullscreen) {
-//             canvas.requestFullscreen()
-//         }
-//         else if (canvas.webkitRequestFullscreen) {
-//             canvas.webkitRequestFullscreen()
-//         }
-//     }
-//     else {
-//         if (document.exitFullscreen) {
-//             document.exitFullscreen()
-//         }
-//         else if (document.webkitExitFullscreen) {
-//             document.webkitExitFullscreen()
-//         }
-//     }
-
-// })
-
 
 
 
@@ -163,23 +133,6 @@ const particlesMaterial = new THREE.PointsMaterial({
     size: 0.05
 })
 
-// GLTF Model Loader
-// const gltfLoader = new GLTFLoader();
-// const gltfGroup = new THREE.Group()
-// gltfLoader.load(
-//     '/models/macbook.gltf',
-//     (gltf) => {
-//         // while(gltf.scene.children.length){
-//         //     scene.add(gltf.scene.children[0])
-//         // }
-//     //    console.log(gltf)
-//         gltfGroup.add(gltf.scene)
-//         gltfGroup.position.y = -1
-//         scene.add(gltfGroup)
-//     }, 
-//     () => { },
-//     () => { }
-// )
 /*
 * Lights
 */
@@ -190,7 +143,7 @@ ambientLight.intensity = 0.5;
 scene.add(ambientLight);
 
 // Directional Lights
-const directionalLight = new THREE.DirectionalLight(0x00fffc, 1);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
 directionalLight.position.set(1, 1.5, 5);
 directionalLight.castShadow = true;
 scene.add(directionalLight);
@@ -201,12 +154,8 @@ scene.add(directionalLightHelper)
 
 
 
-
-// Array of Cubes
-
 const numberOfObjects = 20;
 const cubeGeometry = new THREE.BoxBufferGeometry(0.22, 0.22, 0.22);
-// const coneGeometry = new THREE.ConeBufferGeometry(0.2, 0.3, 32);
 const A = Math.PI * 2 / numberOfObjects
 for (let i = 0; i < numberOfObjects; i++) {
     // let randomG = Math.random() * 10;
@@ -221,8 +170,8 @@ for (let i = 0; i < numberOfObjects; i++) {
     }
     let randomY = 5 * 0.5 - Math.random() * 1.6 * 3
     let randomZ = (Math.random() - 0.5) * 4
-
-    const cube = new THREE.Mesh(cubeGeometry, randomObjectMaterial2);
+    let rm = (Math.random() - 0.5) * 10
+    const cube = new THREE.Mesh(cubeGeometry, rm < 0 ? randomObjectMaterial2 : randomObjectMaterial);
     objects.push(cube);
     cube.position.x = randomX
     cube.position.y = randomY
@@ -230,17 +179,6 @@ for (let i = 0; i < numberOfObjects; i++) {
     cube.rotation.x = Math.random() * Math.PI
     cube.rotation.y = Math.random() * Math.PI
     scene.add(cube);
-
-    // else {
-    //     const cone = new THREE.Mesh(coneGeometry, randomObjectMaterial);
-    //     objects.push(cone);
-    //     cone.position.x = randomX;
-    //     cone.position.y = randomY;
-    //     cone.position.z = randomZ
-    //     cone.rotation.x = Math.random() * Math.PI
-    //     cone.rotation.y = Math.random() * Math.PI
-    //     scene.add(cone);
-    // }
 }
 
 
@@ -262,7 +200,7 @@ particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 
 const particles = new THREE.Points(particlesGeometry, particlesMaterial)
 for (let i = 0; i < particlesCount; i++) {
     positions[i * 3 + 0] = (Math.random() - 0.5) * 10
-    positions[i * 3 + 1] = objectsDistance * 0.5 - Math.random() * 4.7 * 3
+    positions[i * 3 + 1] = objectsDistance * 0.5 - Math.random() * 4.7 * 2
     positions[i * 3 + 2] = (Math.random() - 0.5) * 10
 }
 scene.add(particles)
@@ -281,13 +219,6 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setClearColor(0x000000, 0);
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-// document.body.appendChild(renderer.domElement);
-
-
-// Controls
-// const controls = new OrbitControls(camera, renderer.domElement)
-// controls.enableDamping = false
-// controls.enabled = false
 
 
 /**

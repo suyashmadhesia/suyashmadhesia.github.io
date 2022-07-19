@@ -6,4 +6,16 @@
     margin: 0;
     font-family: 'Montserrat';
     padding: 0;
+    background: #1b2259;
+}
+
+.icon {
+    color: #234ae2
+}
+.section {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    overflow: auto;
 }
