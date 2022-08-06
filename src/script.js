@@ -200,7 +200,7 @@ particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 
 const particles = new THREE.Points(particlesGeometry, particlesMaterial)
 for (let i = 0; i < particlesCount; i++) {
     positions[i * 3 + 0] = (Math.random() - 0.5) * 10
-    positions[i * 3 + 1] = objectsDistance * 0.5 - Math.random() * 4.7 * 2
+    positions[i * 3 + 1] = objectsDistance * 0.5 - Math.random() * 4.7 * 1
     positions[i * 3 + 2] = (Math.random() - 0.5) * 10
 }
 scene.add(particles)
