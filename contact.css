@@ -549,6 +549,10 @@ video {
   margin-left: 1rem;
   margin-right: 1rem;
 }
+.mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
 .mt-16 {
   margin-top: 4rem;
 }
@@ -664,6 +668,10 @@ video {
 }
 @media (min-width: 700px) {
 
+  .md\:fixed {
+    position: fixed;
+  }
+
   .md\:mt-6 {
     margin-top: 1.5rem;
   }
@@ -743,14 +751,14 @@ video {
     line-height: 1;
   }
 
-  .lg\:text-xl {
-    font-size: 1.25rem;
-    line-height: 1.75rem;
-  }
-
   .lg\:text-base {
     font-size: 1rem;
     line-height: 1.5rem;
+  }
+
+  .lg\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
 }
 
