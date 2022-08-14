@@ -571,6 +571,18 @@ video {
 .ml-4 {
   margin-left: 1rem;
 }
+.mt-5 {
+  margin-top: 1.25rem;
+}
+.mt-2 {
+  margin-top: 0.5rem;
+}
+.mr-10 {
+  margin-right: 2.5rem;
+}
+.mt-8 {
+  margin-top: 2rem;
+}
 .flex {
   display: flex;
 }
@@ -643,6 +655,10 @@ video {
 .text-gray-300 {
   --tw-text-opacity: 1;
   color: rgba(209, 213, 219, var(--tw-text-opacity));
+}
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgba(156, 163, 175, var(--tw-text-opacity));
 }
 
 * {
@@ -742,12 +758,8 @@ button {
     height: 100vh;
     position: relative;
     overflow: auto;
-    justify-content: center;
 }
 
-.sbg{
-    background:	#000113;
-}
 
 /* section:nth-child(odd) {
     justify-content: flex-end;
@@ -757,12 +769,17 @@ body::-webkit-scrollbar {
     width: 0;
 }
 
+.hover\:text-yellow-400:hover {
+  --tw-text-opacity: 1;
+  color: rgba(250, 204, 21, var(--tw-text-opacity));
+}
+
 .focus\:outline-none:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 600px) {
 
   .md\:fixed {
     position: fixed;
@@ -780,10 +797,6 @@ body::-webkit-scrollbar {
     margin-right: 0.5rem;
   }
 
-  .md\:ml-6 {
-    margin-left: 1.5rem;
-  }
-
   .md\:pt-3 {
     padding-top: 0.75rem;
   }
@@ -796,6 +809,16 @@ body::-webkit-scrollbar {
   .md\:text-base {
     font-size: 1rem;
     line-height: 1.5rem;
+  }
+
+  .md\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .md\:text-3xl {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
   }
 }
 
@@ -826,12 +849,24 @@ body::-webkit-scrollbar {
     margin-right: 0.75rem;
   }
 
-  .lg\:ml-8 {
-    margin-left: 2rem;
-  }
-
   .lg\:mt-5 {
     margin-top: 1.25rem;
+  }
+
+  .lg\:ml-10 {
+    margin-left: 2.5rem;
+  }
+
+  .lg\:mt-10 {
+    margin-top: 2.5rem;
+  }
+
+  .lg\:mt-6 {
+    margin-top: 1.5rem;
+  }
+
+  .lg\:mt-12 {
+    margin-top: 3rem;
   }
 
   .lg\:pt-4 {
@@ -856,6 +891,11 @@ body::-webkit-scrollbar {
   .lg\:text-xl {
     font-size: 1.25rem;
     line-height: 1.75rem;
+  }
+
+  .lg\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
   }
 }
 

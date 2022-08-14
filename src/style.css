@@ -85,12 +85,8 @@ button {
     height: 100vh;
     position: relative;
     overflow: auto;
-    justify-content: center;
 }
 
-.sbg{
-    background:	#000113;
-}
 
 /* section:nth-child(odd) {
     justify-content: flex-end;
