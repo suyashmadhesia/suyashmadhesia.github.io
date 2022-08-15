@@ -1,33 +1,18 @@
 import './style.css'
 import * as THREE from 'three'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import * as dat from 'dat.gui';
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
+const fscreen = document.getElementById("full-screen")
+const screenBody = document.getElementById("screen")
+let fullScreen = false;
 
 // Global Used in all values
 let objects = []
-// const gui = new dat.GUI();
+
+
 // Scene
 const scene = new THREE.Scene()
-const menu = document.getElementById("menu")
-let showMenuBool = false;
-const showMenu = () => {
-    const showMenuDiv = document.getElementById("menu-list")
-    const menuIcon = document.getElementById("menu-icon")
-    if (showMenuBool == true) {
-        showMenuDiv.classList.add('menu-list')
-        menuIcon.innerHTML = "menu"
-        showMenuBool = false
-    } else {
-        showMenuBool = true
-        menuIcon.innerHTML = "close"
-        showMenuDiv.classList.remove('menu-list')
-    }
-}
-menu.addEventListener("click", showMenu);
 
 const loadingHTML = () => {
     const loadingHTML = document.getElementById("loading");
@@ -68,8 +53,12 @@ window.addEventListener('scroll', () => {
     if (newSection != currentSection) {
         currentSection = newSection
     }
+})
 
-    // console.log(newSection)
+// Implement full screen
+
+fscreen.addEventListener('click', () => {
+    
 })
 
 window.addEventListener('resize', () => {
@@ -112,7 +101,7 @@ scene.add(cameraGroup)
 
 
 let textureLoaded1 = false;
-let textureLoaded2 = false;
+
 /**
  * Textures
  */
@@ -121,12 +110,8 @@ const textureLoader = new THREE.TextureLoader()
 const matcapTexture = textureLoader.load('textures/matcap/9.png', (texture) => {
     textureLoaded1 = true
 });
-const cubeTexture = textureLoader.load('textures/matcap/10.png', (texture) => {
-    textureLoaded2 = true;
-});
 
 const randomObjectMaterial2 = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
-const randomObjectMaterial = new THREE.MeshMatcapMaterial({ matcap: cubeTexture });
 const particlesMaterial = new THREE.PointsMaterial({
     color: '#ffeded',
     sizeAttenuation: true,
@@ -154,11 +139,9 @@ scene.add(directionalLightHelper)
 
 
 
-const numberOfObjects = 20;
+const numberOfObjects = 25;
 const cubeGeometry = new THREE.BoxBufferGeometry(0.22, 0.22, 0.22);
-const A = Math.PI * 2 / numberOfObjects
 for (let i = 0; i < numberOfObjects; i++) {
-    // let randomG = Math.random() * 10;
     let randomX = (Math.random() - 0.5) * 10
     if (sizes.width < 700) {
         if (randomX > 3) {
@@ -168,10 +151,10 @@ for (let i = 0; i < numberOfObjects; i++) {
             randomX = randomX + 1;
         }
     }
-    let randomY = 5 * 0.5 - Math.random() * 1.6 * 3
+    let randomY = 4 * 0.5 - Math.random() * 1.15 * 4.7
     let randomZ = (Math.random() - 0.5) * 4
     let rm = (Math.random() - 0.5) * 10
-    const cube = new THREE.Mesh(cubeGeometry, rm < 0 ? randomObjectMaterial2 : randomObjectMaterial);
+    const cube = new THREE.Mesh(cubeGeometry, randomObjectMaterial2);
     objects.push(cube);
     cube.position.x = randomX
     cube.position.y = randomY
@@ -187,7 +170,7 @@ for (let i = 0; i < numberOfObjects; i++) {
  */
 // Geometry
 const objectsDistance = 4
-const particlesCount = 300
+const particlesCount = 200
 const positions = new Float32Array(particlesCount * 3)
 for (let i = 0; i < particlesCount; i++) {
     positions[i * 3 + 0] = Math.random()
@@ -200,7 +183,7 @@ particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 
 const particles = new THREE.Points(particlesGeometry, particlesMaterial)
 for (let i = 0; i < particlesCount; i++) {
     positions[i * 3 + 0] = (Math.random() - 0.5) * 10
-    positions[i * 3 + 1] = objectsDistance * 0.5 - Math.random() * 4.7 * 1
+    positions[i * 3 + 1] = objectsDistance * 0.5 - Math.random() * 4.7 * 1.15
     positions[i * 3 + 2] = (Math.random() - 0.5) * 10
 }
 scene.add(particles)
@@ -240,7 +223,7 @@ const tick = () => {
         }
     }
 
-    if (textureLoaded1 && textureLoaded2) {
+    if (textureLoaded1) {
         if (flag == 0) {
             cameraGroup.position.x = -5
             cameraGroup.position.y = 5
@@ -248,7 +231,6 @@ const tick = () => {
         }
         loadingHTML()
         textureLoaded1 = false;
-        textureLoaded2 = false;
     }
 
     const parallaxX = cursor.x * 0.4
@@ -257,10 +239,6 @@ const tick = () => {
     cameraGroup.position.x += (parallaxX - cameraGroup.position.x) * 5 * deltaTime
     cameraGroup.position.y += (parallaxY - cameraGroup.position.y) * 5 * deltaTime
 
-    // Update controls
-    // controls.update()
-
-    // Render
     renderer.render(scene, camera)
 
     // Call tick again on the next frame

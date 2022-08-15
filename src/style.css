@@ -25,6 +25,11 @@ button {
     display: none;
 }
 
+.writing{
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+}
+
 .lds-ring {
     display: inline-block;
     position: relative;
@@ -93,6 +98,16 @@ button {
 } */
 
 body::-webkit-scrollbar {
-    width: 0;
+    width: 8px;
 }
+
+
+body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #00003e;
+    border-radius: 10px;
+  }
 

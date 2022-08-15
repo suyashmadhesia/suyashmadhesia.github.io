@@ -1,16 +1,8 @@
-# Three.js Journey
+# Suyash Maddhessiya
 
-## Setup
-Download [Node.js](https://nodejs.org/en/download/).
-Run this followed commands:
+## This is my Portfolio Website.
+### Created using three.js, webpack, tailwindcss and html
 
-``` bash
-# Install dependencies (only the first time)
-npm install
-
-# Run the local server at localhost:8080
-npm run dev
-
-# Build for production in the dist/ directory
-npm run build
-```
+## To Run this on your local system clone this repo
+### To run: `npm install` and then `npm run dev` (nodejs version 16+)
+### Visit [My Portfolio](suyashmadhesia.github.io)
