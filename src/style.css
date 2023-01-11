@@ -9,7 +9,7 @@
 }
 
 html {
-    background: #000113;
+    background: #010203;
 }
 
 .body {
@@ -87,7 +87,8 @@ button {
 .section {
     display: flex;
     align-items: center;
-    height: 100vh;
+    height: 98vh;
+    justify-content: center;
     position: relative;
     overflow: auto;
 }
