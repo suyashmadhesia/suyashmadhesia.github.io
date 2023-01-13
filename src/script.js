@@ -1,5 +1,7 @@
 import './style.css'
 import * as THREE from 'three'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { GUI } from 'dat.gui'
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -135,10 +137,15 @@ directionalLight.castShadow = true;
 scene.add(directionalLight);
 
 
+// Helper
 // Directional Light helper
 const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 0.2)
 directionalLightHelper.visible = false
 scene.add(directionalLightHelper)
+
+// Axis Helper
+const axesHelper = new THREE.AxesHelper( 1 );
+scene.add( axesHelper );
 
 
 // generating cubes for the background
@@ -154,7 +161,7 @@ for (let i = 0; i < numberOfObjects; i++) {
             randomX = randomX + 1;
         }
     }
-    let randomY = 4 * 0.5 - Math.random() * 1.15 * 4.7
+    let randomY = 4 * 0.5 - Math.random() * 1.15 * 4
     let randomZ = (Math.random() - 0.5) * 4
     // let rm = (Math.random() - 0.5) * 10
     const cube = new THREE.Mesh(cubeGeometry, randomObjectMaterial2);
@@ -187,11 +194,41 @@ particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 
 const particles = new THREE.Points(particlesGeometry, particlesMaterial)
 for (let i = 0; i < particlesCount; i++) {
     positions[i * 3 + 0] = (Math.random() - 0.5) * 10
-    positions[i * 3 + 1] = objectsDistance * 0.5 - Math.random() * 4.7 * 1.15
+    positions[i * 3 + 1] = objectsDistance * 0.5 - Math.random() * 4 * 1.15
     positions[i * 3 + 2] = (Math.random() - 0.5) * 10
 }
 scene.add(particles)
 
+/*
+Debug UI renderer
+*/
+
+const gui = new GUI()
+
+// Loading My models and Assets
+const loader = new GLTFLoader();
+loader.loadAsync('/models/flutter.gltf').then((gltf) => {
+    const gltfGroup = new THREE.Group()
+    const flutterFolderRotation = gui.addFolder('Flutter Rotation')
+    const flutterFolderScale = gui.addFolder('Flutter Scale')
+    const flutterFolderPosition = gui.addFolder('Flutter Position')
+    gltfGroup.add(gltf.scene)
+    gltfGroup.position.y = -3
+    gltfGroup.scale.set(0.6, 0.6, 0.6)
+    gltfGroup.rotation.x = Math.PI / 2
+    gltfGroup.rotation.y = 0
+    gltfGroup.rotation.z = 0
+    flutterFolderRotation.add(gltfGroup.rotation, 'x', -Math.PI * 2, Math.PI * 2, Math.PI / 20)
+    flutterFolderRotation.add(gltfGroup.rotation, 'y', -Math.PI * 2, Math.PI * 2, Math.PI / 20)
+    flutterFolderRotation.add(gltfGroup.rotation, 'z',-Math.PI * 2, Math.PI * 2, Math.PI / 20)
+    flutterFolderScale.add(gltfGroup.scale, 'x', 0, 10)
+    flutterFolderScale.add(gltfGroup.scale, 'y', 0, 10)
+    flutterFolderScale.add(gltfGroup.scale, 'z', 0, 10)
+    flutterFolderPosition.add(gltfGroup.position, 'x', 0,100)
+    flutterFolderPosition.add(gltfGroup.position, 'y', -100, 100)
+    flutterFolderPosition.add(gltfGroup.position, 'z', 0, 100)
+    scene.add(gltfGroup)
+})
 
 
 
