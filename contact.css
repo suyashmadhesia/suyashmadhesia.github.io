@@ -588,6 +588,9 @@ video {
 .justify-end {
   justify-content: flex-end;
 }
+.justify-center {
+  justify-content: center;
+}
 .rounded-full {
   border-radius: 9999px;
 }
@@ -652,6 +655,14 @@ video {
 .text-gray-300 {
   --tw-text-opacity: 1;
   color: rgba(209, 213, 219, var(--tw-text-opacity));
+}
+.text-secondary {
+  --tw-text-opacity: 1;
+  color: rgba(94, 103, 109, var(--tw-text-opacity));
+}
+.text-primary {
+  --tw-text-opacity: 1;
+  color: rgba(225, 83, 4, var(--tw-text-opacity));
 }
 .outline-none {
   outline: 2px solid transparent;
