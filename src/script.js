@@ -58,7 +58,7 @@ window.addEventListener('scroll', () => {
 // Implement full screen
 
 fscreen.addEventListener('click', () => {
-    
+
 })
 
 window.addEventListener('resize', () => {
@@ -75,7 +75,7 @@ window.addEventListener('resize', () => {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 })
 
-
+// mouse move event of parallex effect
 window.addEventListener('mousemove', (e) => {
     cursor.x = e.clientX / sizes.width - 0.5
     cursor.y = e.clientY / sizes.height - 0.5
@@ -107,7 +107,8 @@ let textureLoaded1 = false;
  */
 // Here we place all the Materials and textures
 const textureLoader = new THREE.TextureLoader()
-const matcapTexture = textureLoader.load('textures/matcap/9.png', (texture) => {
+const randomTexture = Math.floor(Math.random() * 9)
+const matcapTexture = textureLoader.load(`textures/matcap/${randomTexture}.png`, (texture) => {
     textureLoaded1 = true
 });
 
@@ -132,13 +133,15 @@ const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
 directionalLight.position.set(1, 1.5, 5);
 directionalLight.castShadow = true;
 scene.add(directionalLight);
+
+
 // Directional Light helper
 const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight, 0.2)
 directionalLightHelper.visible = false
 scene.add(directionalLightHelper)
 
 
-
+// generating cubes for the background
 const numberOfObjects = 25;
 const cubeGeometry = new THREE.BoxBufferGeometry(0.22, 0.22, 0.22);
 for (let i = 0; i < numberOfObjects; i++) {
@@ -153,7 +156,7 @@ for (let i = 0; i < numberOfObjects; i++) {
     }
     let randomY = 4 * 0.5 - Math.random() * 1.15 * 4.7
     let randomZ = (Math.random() - 0.5) * 4
-    let rm = (Math.random() - 0.5) * 10
+    // let rm = (Math.random() - 0.5) * 10
     const cube = new THREE.Mesh(cubeGeometry, randomObjectMaterial2);
     objects.push(cube);
     cube.position.x = randomX
@@ -179,7 +182,8 @@ for (let i = 0; i < particlesCount; i++) {
 }
 const particlesGeometry = new THREE.BufferGeometry()
 particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-// Points
+
+// Position of the Points
 const particles = new THREE.Points(particlesGeometry, particlesMaterial)
 for (let i = 0; i < particlesCount; i++) {
     positions[i * 3 + 0] = (Math.random() - 0.5) * 10
@@ -233,6 +237,7 @@ const tick = () => {
         textureLoaded1 = false;
     }
 
+    // mouse hover parallex effect animation
     const parallaxX = cursor.x * 0.4
     const parallaxY = - cursor.y * 0.4
     camera.position.y = -scrollY / sizes.height * objectsDistance

@@ -93,11 +93,6 @@ button {
     overflow: auto;
 }
 
-
-/* section:nth-child(odd) {
-    justify-content: flex-end;
-} */
-
 body::-webkit-scrollbar {
     width: 8px;
 }
