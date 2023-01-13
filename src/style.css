@@ -86,9 +86,7 @@ button {
 
 .section {
     display: flex;
-    align-items: center;
     height: 98vh;
-    justify-content: center;
     position: relative;
     overflow: auto;
 }

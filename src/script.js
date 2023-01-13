@@ -125,11 +125,11 @@ const particlesMaterial = new THREE.PointsMaterial({
 // Ambient light for realistic shadows
 const ambientLight = new THREE.AmbientLight();
 ambientLight.color = new THREE.Color(0xffffff);
-ambientLight.intensity = 0.5;
+ambientLight.intensity = 0.7;
 scene.add(ambientLight);
 
 // Directional Lights
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 0.7);
 directionalLight.position.set(1, 1.5, 5);
 directionalLight.castShadow = true;
 scene.add(directionalLight);
